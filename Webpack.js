@@ -20,6 +20,10 @@ module.exports = {
                 test: /\.es6$/,
                 exclude: /node_modules/,
                 loader: 'babel?presets[]=es2015'
+            },
+            {
+                test: /\.hbs$/,
+                loader: "mustache"
             }
         ]
     },
@@ -50,7 +54,8 @@ module.exports = {
 
     plugins: [
         new HtmlWebpackPlugin({
-            "title": "Sushi Bargain"
+            title: "Sushi Bargain",
+            template: './src/templates/main.ejs'
         }),
         new webpack.optimize.UglifyJsPlugin({
             compress: {

@@ -59,6 +59,16 @@ describe('lookup', function () {
         let actual = lookup.saleWithinPeriod(84, 3);
         assert.deepStrictEqual(Array.from(actual), Array.from(expected));
     })
+
+    it('generates map links for coordinates correctly', () => {
+        let testData = generateTestData();
+        let lookup = new Lookup(testData);
+        let appleMapUrl = lookup.generateMapLink(51.507496, -0.158340, "iPhone 6");
+        let androidMapUrl = lookup.generateMapLink(51.507496, -0.158340, "Nexus 6");
+
+        assert.equal(appleMapUrl, "maps://maps.google.com/maps?daddr=51.507496,-0.15834&dirflg=w&amp;ll=");
+        assert.equal(androidMapUrl, "https://maps.google.com/maps?daddr=51.507496,-0.15834&dirflg=w&amp;ll=");
+    })
 })
 
 describe('location', function () {
@@ -85,14 +95,5 @@ describe('location', function () {
         }
 
         assert.deepStrictEqual(relevantGeoHashes, expected);
-    })
-
-    it('generates map links for coordinates correctly', () => {
-        let location = new Location(7);
-        let appleMapUrl = location.generateMapLink(51.507496, -0.158340, "iPhone 6");
-        let androidMapUrl = location.generateMapLink(51.507496, -0.158340, "Nexus 6");
-
-        assert.equal(appleMapUrl, "maps://maps.google.com/maps?daddr=51.507496,-0.15834&amp;ll=");
-        assert.equal(androidMapUrl, "https://maps.google.com/maps?daddr=51.507496,-0.15834&amp;ll=");
     })
 })

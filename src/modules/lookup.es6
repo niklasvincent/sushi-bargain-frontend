@@ -4,11 +4,19 @@ export default class {
         this.timeSlotLookup = data.time_slot_lookup;
         this.geoHashLookup = data.geo_hash.lookup;
         this.shops = data.shops;
+        this.currentTime();
+    }
+
+    currentTime() {
+      let now = new Date;
+      this.currentWeekDay = now.getDay();
+      this.currentWholeHour = now.getHours();
+      this.currentHour = Math.round((this.currentWholeHour + (now.getMinutes() / 60)) * 100)/100;
     }
 
     currentTimeSlot() {
         let now = new Date;
-        return now.getDay() * 24 * 2 + now.getHours() * 2;
+        return this.currentWeekDay * 24 * 2 + this.currentWholeHour * 2;
     }
 
     saleWithinNextHours(hours) {
@@ -39,8 +47,51 @@ export default class {
         return allNearbyShops;
     }
 
+    relativeTime(time) {
+      if (time == 0) {
+        return "Now";
+      }
+      var hours = Math.round(time - time % 1);
+      var minutes = Math.round(time % 1 * 60);
+      var humanReadable = "In ";
+      if (hours > 0) {
+        humanReadable += hours  + " hours and ";
+      }
+      humanReadable += Math.abs(minutes) + " minutes";
+      return humanReadable;
+    }
+
+    generateMapLink(lat, lng, platform) {
+        let isAppleDevice = (platform) => {
+            return (platform.indexOf("iPhone") != -1)
+                    || (platform.indexOf("iPod") != -1)
+                    || (platform.indexOf("iPad") != -1);
+        }
+        var protocol = isAppleDevice(platform) ? "maps://" : "https://";
+        return protocol + "maps.google.com/maps?daddr=" + lat + "," + lng + "&dirflg=w&amp;ll=";
+    }
+
+    intersection(setA, setB) {
+      return Array.from(new Set([...setA].filter(x => setB.has(x))));
+    }
+
     detailsForShop(index) {
-        return this.shops[index];
+      let shopInformation = this.shops[index];
+      let mapLink = this.generateMapLink(
+        shopInformation.position.lat,
+        shopInformation.position.lng,
+        navigator.platform
+      );
+      let timeUntilSale = shopInformation.half_price_times[this.currentWeekDay] - this.currentHour;
+      let timeUntilSaleRelative = this.relativeTime(timeUntilSale)
+      return Object.assign(
+        this.shops[index],
+        {
+          map_link: mapLink,
+          time_until_sale: timeUntilSale,
+          time_until_sale_relative: timeUntilSaleRelative
+        }
+      );
     }
 
 }

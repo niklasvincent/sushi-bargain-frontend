@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="main.css" media="screen" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+    <div id="app" class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__drawer-button">
+          <a class="reload-icon" href="/"><i class="material-icons">restaurant</i></a>
+        </div>
+        <div class="mdl-layout__header-row">
+          Sushi Bargain
+        </div>
+      </header>
+      <div id="loader" class="app--loader mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+      <ul id="shop-list" class="mdl-list"></ul>
+    </div>
+  </body>
+</html>

@@ -38,16 +38,6 @@ export default class {
         });
     }
 
-    generateMapLink(lat, lng, platform) {
-        let isAppleDevice = (platform) => {
-            return (platform.indexOf("iPhone") != -1)
-                    || (platform.indexOf("iPod") != -1)
-                    || (platform.indexOf("iPad") != -1);
-        }
-        var protocol = isAppleDevice(platform) ? "maps://" : "https://";
-        return protocol + "maps.google.com/maps?daddr=" + lat + "," + lng + "&amp;ll=";
-    }
-
     distanceBetween(lon1, lat1, lon2, lat2) {
         let degrees2Radians = (degrees) => {
             return degrees * Math.PI / 180;
@@ -65,6 +55,10 @@ export default class {
 
     distance(lng, lat) {
         return Math.round(this.distanceBetween(window.position.coords.longitude, window.position.coords.latitude, lng, lat) * 10) / 10;
+    }
+
+    distanceToShop(shopInformation) {
+      return this.distance(shopInformation.position.lng, shopInformation.position.lat);
     }
 
 }
