@@ -28,5 +28,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
           return a.time_until_sale - b.time_until_sale || a.distance - b.distance;
         });
         relevantShops.forEach(shop => view.addToList(shopTemplate(shop)));
+        view.donePopulating();
     });
 });
