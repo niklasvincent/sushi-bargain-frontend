@@ -12,6 +12,5 @@ js:
 test: SHELL:=/bin/bash
 test:
 	( \
-	    cd web; \
 	    npm run test; \
 	)
