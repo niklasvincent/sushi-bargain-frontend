@@ -5,13 +5,13 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
 
     resolve: {
-        root: ["src/", "node_modules/"],
+        root: [".", "src/", "node_modules/"],
         extensions: ["", ".js", ".es6"],
         alias: {}
     },
 
     resolveLoader: {
-        root: path.join(process.env.PWD, 'node_modules/')
+        root: path.join(process.env.PWD, '/../node_modules/')
     },
 
     module: {
@@ -24,6 +24,10 @@ module.exports = {
             {
                 test: /\.hbs$/,
                 loader: "mustache"
+            },
+            {
+                test: /\.scss$/,
+                loaders: ["style", "css", "sass"]
             }
         ]
     },
@@ -43,7 +47,7 @@ module.exports = {
     },
 
     entry: {
-        main: "./src/main"
+        main: "./main"
     },
 
     stats: {
@@ -55,7 +59,7 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             title: "Sushi Bargain",
-            template: './src/templates/main.ejs'
+            template: './templates/main.ejs'
         }),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
@@ -64,6 +68,6 @@ module.exports = {
         })
     ],
 
-    context: '.',
+    context: path.join(__dirname, 'src'),
     debug: false
 };

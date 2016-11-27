@@ -36,5 +36,8 @@ node_modules
 public
 build
 
+# Generated CSS
+src/main.css
+
 # JSON data
 sushi-data-optimised.json
