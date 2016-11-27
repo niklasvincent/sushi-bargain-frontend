@@ -1,5 +1,8 @@
 import "material-design-lite"
 
+
+require("!style!css!sass!./main.sass");
+
 import Lookup from 'modules/lookup'
 import Location from 'modules/location'
 import View from 'modules/view'
@@ -13,7 +16,7 @@ let lookup = new Lookup(data);
 
 let view = new View();
 
-let shopsWithSaleSoon = lookup.saleWithinNextHours(2);
+let shopsWithSaleSoon = lookup.saleWithinNextHours(6);
 
 document.addEventListener("DOMContentLoaded", function(event) {
     location.getRelevantGeoHashesForLocation(4).then(nearbyGeoHashes => {
