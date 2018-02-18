@@ -2,6 +2,7 @@ export default class {
 
     constructor(data) {
         this.timeSlotLookup = data.time_slot_lookup;
+        this.nbrOfTimeSlots = this.timeSlotLookup.length;
         this.geoHashLookup = data.geo_hash.lookup;
         this.shops = data.shops;
         this.currentTime();
@@ -9,7 +10,7 @@ export default class {
 
     currentTime() {
       let now = new Date;
-      this.currentWeekDay = now.getDay();
+      this.currentWeekDay = (now.getDay() || 7) - 1; // Normalise to start on Monday as 0 and Sunday as 5
       this.currentWholeHour = now.getHours();
       this.currentHour = Math.round((this.currentWholeHour + (now.getMinutes() / 60)) * 100)/100;
     }
@@ -26,6 +27,7 @@ export default class {
     saleWithinPeriod(currentTimeSlot, periodsAhead) {
         let relevantShops = new Set();
         for (var futureTimeSlot = currentTimeSlot; futureTimeSlot <= currentTimeSlot + periodsAhead; futureTimeSlot++) {
+            futureTimeSlot = futureTimeSlot % this.nbrOfTimeSlots;
             this.timeSlotLookup[futureTimeSlot].forEach(shop => relevantShops.add(shop));
         }
         return relevantShops;
