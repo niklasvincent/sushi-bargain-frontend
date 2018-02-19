@@ -27,8 +27,7 @@ export default class {
     saleWithinPeriod(currentTimeSlot, periodsAhead) {
         let relevantShops = new Set();
         for (var futureTimeSlot = currentTimeSlot; futureTimeSlot <= currentTimeSlot + periodsAhead; futureTimeSlot++) {
-            futureTimeSlot = futureTimeSlot % this.nbrOfTimeSlots;
-            this.timeSlotLookup[futureTimeSlot].forEach(shop => relevantShops.add(shop));
+            this.timeSlotLookup[futureTimeSlot % this.nbrOfTimeSlots].forEach(shop => relevantShops.add(shop));
         }
         return relevantShops;
     }
