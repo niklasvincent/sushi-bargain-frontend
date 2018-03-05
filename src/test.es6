@@ -53,7 +53,7 @@ describe('lookup', function () {
         testData["time_slot_lookup"][87] = [7];
         testData["time_slot_lookup"][88] = [8];
 
-        let lookup = new Lookup(testData);
+        let lookup = new Lookup(testData, new Date("October 6, 2016 11:13:00"));
 
         let expected = new Set([1, 2, 3, 4, 5, 6, 7]);
         let actual = lookup.saleWithinPeriod(84, 3);
@@ -62,7 +62,7 @@ describe('lookup', function () {
 
     it('generates map links for coordinates correctly', () => {
         let testData = generateTestData();
-        let lookup = new Lookup(testData);
+        let lookup = new Lookup(testData, new Date("October 6, 2016 11:13:00"));
         let appleMapUrl = lookup.generateMapLink(51.507496, -0.158340, "iPhone 6");
         let androidMapUrl = lookup.generateMapLink(51.507496, -0.158340, "Nexus 6");
 

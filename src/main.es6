@@ -11,8 +11,10 @@ var shopTemplate = require('./templates/shop.hbs');
 
 let data = require("json!./../sushi-data-optimised.json");
 
+let now = new Date;
+
 let location = new Location(data.geo_hash.precision);
-let lookup = new Lookup(data);
+let lookup = new Lookup(data, now);
 
 let view = new View();
 

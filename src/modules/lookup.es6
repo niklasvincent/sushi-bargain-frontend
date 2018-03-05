@@ -1,22 +1,20 @@
 export default class {
 
-    constructor(data) {
+    constructor(data, now) {
         this.timeSlotLookup = data.time_slot_lookup;
         this.nbrOfTimeSlots = this.timeSlotLookup.length;
         this.geoHashLookup = data.geo_hash.lookup;
         this.shops = data.shops;
-        this.currentTime();
+        this.currentTime(now);
     }
 
-    currentTime() {
-      let now = new Date;
+    currentTime(now) {
       this.currentWeekDay = (now.getDay() || 7) - 1; // Normalise to start on Monday as 0 and Sunday as 5
       this.currentWholeHour = now.getHours();
       this.currentHour = Math.round((this.currentWholeHour + (now.getMinutes() / 60)) * 100)/100;
     }
 
     currentTimeSlot() {
-        let now = new Date;
         return this.currentWeekDay * 24 * 2 + this.currentWholeHour * 2;
     }
 
@@ -54,11 +52,17 @@ export default class {
       }
       var hours = Math.round(time - time % 1);
       var minutes = Math.round(time % 1 * 60);
-      var humanReadable = "In ";
-      if (hours > 0) {
-        humanReadable += hours  + " hours and ";
+      var humanReadable = "";
+      if (time > 0) {
+        humanReadable = "In ";
+        if (hours > 0) {
+            humanReadable += hours  + " hours and ";
+        }
+        humanReadable += Math.abs(minutes) + " minutes";
+      } else {
+        humanReadable = "Started ";
+        humanReadable += Math.abs(minutes) + " minutes ago";
       }
-      humanReadable += Math.abs(minutes) + " minutes";
       return humanReadable;
     }
 
