@@ -66,14 +66,8 @@ export default class {
       return humanReadable;
     }
 
-    generateMapLink(lat, lng, platform) {
-        let isAppleDevice = (platform) => {
-            return (platform.indexOf("iPhone") != -1)
-                    || (platform.indexOf("iPod") != -1)
-                    || (platform.indexOf("iPad") != -1);
-        }
-        var protocol = isAppleDevice(platform) ? "maps://" : "https://";
-        return protocol + "maps.google.com/maps?daddr=" + lat + "," + lng + "&dirflg=w&amp;ll=";
+    generateMapLink(lat, lng) {
+        return "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lng;
     }
 
     intersection(setA, setB) {
@@ -84,8 +78,7 @@ export default class {
       let shopInformation = this.shops[index];
       let mapLink = this.generateMapLink(
         shopInformation.position.lat,
-        shopInformation.position.lng,
-        navigator.platform
+        shopInformation.position.lng
       );
       let timeUntilSale = shopInformation.half_price_times[this.currentWeekDay] - this.currentHour;
       let timeUntilSaleRelative = this.relativeTime(timeUntilSale)
