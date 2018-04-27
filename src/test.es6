@@ -63,11 +63,9 @@ describe('lookup', function () {
     it('generates map links for coordinates correctly', () => {
         let testData = generateTestData();
         let lookup = new Lookup(testData, new Date("October 6, 2016 11:13:00"));
-        let appleMapUrl = lookup.generateMapLink(51.507496, -0.158340, "iPhone 6");
-        let androidMapUrl = lookup.generateMapLink(51.507496, -0.158340, "Nexus 6");
+        let mapUrl = lookup.generateMapLink(51.507496, -0.158340,);
 
-        assert.equal(appleMapUrl, "maps://maps.google.com/maps?daddr=51.507496,-0.15834&dirflg=w&amp;ll=");
-        assert.equal(androidMapUrl, "https://maps.google.com/maps?daddr=51.507496,-0.15834&dirflg=w&amp;ll=");
+        assert.equal(mapUrl, "https://www.google.com/maps/dir/?api=1&destination=51.507496,-0.15834");
     })
 })
 
